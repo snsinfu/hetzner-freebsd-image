@@ -16,7 +16,7 @@ service hostname restart
 # Host key
 rm -f /etc/ssh/ssh_host_*
 ssh-keygen -A
-pgrep sshd.pid || service sshd restart
+pgrep sshd && service sshd restart
 
 # User script
 fetch -o- http://169.254.169.254/latest/user-data | sh
