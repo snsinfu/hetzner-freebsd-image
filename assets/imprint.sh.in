@@ -1,0 +1,30 @@
+#!/bin/sh
+set -eux
+
+cat > /etc/ssh/sshd_config << END
+PermitRootLogin no
+PasswordAuthentication no
+ChallengeResponseAuthentication no
+UsePAM yes
+Subsystem sftp internal-sftp
+END
+
+cat > /etc/rc.conf << END
+hostname=""
+ifconfig_vtnet0="DHCP"
+ifconfig_vtnet0_ipv6="SLAAC"
+sshd_enable="YES"
+sendmail_enable="NO"
+sendmail_submit_enable="NO"
+sendmail_outbound_enable="NO"
+sendmail_msp_queue_enable="NO"
+END
+
+b64decode -r > /root/firstboot.sh << END
+${firstboot_base64}
+END
+
+cat > /etc/rc.local << END
+rm /etc/rc.local
+sh -x /root/firstboot.sh 2> /var/log/firstboot.log
+END
