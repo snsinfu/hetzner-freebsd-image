@@ -1,3 +1,10 @@
+# Hetzner FreeBSD image
+
+Hetzner used to provide a FreeBSD image for their cloud VPS but they have
+removed the one in 2019 Q4 or somewhere around that. This repository contains
+scripts for creating a basic FreeBSD image as a snapshot.
+
+
 ## Create an image
 
 Set `HCLOUD_TOKEN` environment variable and type `make` to start a base image
@@ -11,7 +18,7 @@ installation starts. Proceed as follows:
 5. Choose mirror: `ftp://ftp.de.freebsd.org`
 6. Partitioning: Auto (UFS)
 7. Select GPT
-8. Edit partition table:
+8. Edit partition table (swap is optional):
    ```
    da0
      da0p1  512KB   freebsd-boot
@@ -37,6 +44,9 @@ freebsd-12.1`.
 
 
 ## Use image in Terraform configuration
+
+Use the `custom_image` label to select the snapshot as the server image. Provide
+firstboot shell script as `user_data`. The image does not support cloud-init.
 
 ```
 resource "hcloud_server" "master" {
