@@ -12,7 +12,6 @@ END
 cat > /etc/rc.conf << END
 hostname=""
 ifconfig_vtnet0="DHCP"
-ifconfig_vtnet0_ipv6="inet6 accept_rtadv"
 sshd_enable="YES"
 sendmail_enable="NO"
 sendmail_submit_enable="NO"
