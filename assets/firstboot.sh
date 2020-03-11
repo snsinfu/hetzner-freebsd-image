@@ -1,9 +1,12 @@
 #!/bin/sh
 set -u
 
+# https://docs.openstack.org/nova/rocky/user/metadata-service.html
+API="http://169.254.169.254/2009-04-04"
+
 # Set hostname.
-sysrc hostname="$(fetch -o- http://169.254.169.254/latest/meta-data/hostname)"
+sysrc hostname="$(fetch -o- "${API}/meta-data/hostname")"
 service hostname restart
 
-# User script
-fetch -o- http://169.254.169.254/latest/user-data | sh
+# Run user script if provided.
+fetch -o- "${API}/user-data" | sh
