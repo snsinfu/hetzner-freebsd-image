@@ -13,6 +13,7 @@ cat > /etc/rc.conf << END
 hostname=""
 ifconfig_vtnet0="DHCP"
 sshd_enable="YES"
+growfs_enable="YES"
 sendmail_enable="NO"
 sendmail_submit_enable="NO"
 sendmail_outbound_enable="NO"
@@ -27,3 +28,6 @@ cat > /etc/rc.local << END
 rm /etc/rc.local
 sh -x /root/firstboot.sh 2> /var/log/firstboot.log
 END
+
+# Allow firstboot services (e.g., /etc/rc.d/growfs) to run.
+touch /firstboot
