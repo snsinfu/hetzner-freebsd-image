@@ -26,7 +26,7 @@ END
 
 cat > /etc/rc.local << END
 rm /etc/rc.local
-sh -x /root/firstboot.sh 2> /var/log/firstboot.log
+sh -x /root/firstboot.sh 2>&1 | tee /var/log/firstboot.log
 END
 
 # Allow firstboot services (e.g., /etc/rc.d/growfs) to run.
